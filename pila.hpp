@@ -14,20 +14,20 @@ private:
     int Tam;
     int ultimo;
     void Inserta(T dato, int posicion);
-    void Agrega(T dato);
     void Busca(T dato);
-    void Elimina(int posicion);
+    void Muestra();
+    int ultimo_() const;
     T recupera(int posicion);
 public:
     pila();
     void Inicializa(T dato, int ultimo);
+    void Agrega(T dato);
+    void Elimina(int posicion);
     bool Vacia() const;
     bool Llena() const;
-    void Muestra();
-    int ultimo_() const;
-    void push(float element);
+    void push(T element);
     int pop();
-    int top();
+    T top(int opc);
 };
 
 template<typename T, int MAX>
@@ -44,7 +44,7 @@ template<typename T, int MAX>
 void pila<T, MAX>::Inserta(T dato, int posicion)
 {
     if(Llena() || posicion < 0 || posicion > ultimo + 1) {
-        cout << "\nError de insercion";
+        cout << "\nError de insercion" << endl;
     } else {
         int i = ultimo + 1;
         while(i > posicion) {
@@ -53,7 +53,7 @@ void pila<T, MAX>::Inserta(T dato, int posicion)
         }
         Datos[posicion] = dato;
         ultimo++;
-        cout << "\nElemento insertado";
+        cout << "\nElemento insertado" << endl;
     }
 }
 
@@ -89,7 +89,7 @@ template<typename T, int MAX>
 void pila<T, MAX>::Elimina(int posicion)
 {
     if(Vacia() || posicion < 0 || posicion > ultimo) {
-        cout << "Error de eliminacion";
+        cout << "Error de eliminacion" << endl;
     } else {
         int i = posicion;
         while(i < ultimo) {
@@ -97,7 +97,7 @@ void pila<T, MAX>::Elimina(int posicion)
             i++;
         }
         ultimo--;
-        cout << "Elemento eliminado";
+        cout << "Elemento eliminado" << endl;
     }
 }
 
@@ -148,32 +148,31 @@ int pila<T, MAX>::ultimo_() const
 }
 
 template<typename T, int MAX>
-void pila<T, MAX>::push(float element)
+void pila<T, MAX>::push(T element)
 {
-    Inserta(element, ultimo + 1);
+    Agrega(element);
 }
 
 template<typename T, int MAX>
 int pila<T, MAX>::pop()
 {
-     if (Vacia()) {
-        cout << "La pila está vacía. No se puede realizar la operación pop." << endl;
-        return -1;
-    }
-    T valor = Datos[ultimo];
-    ultimo--;
-    return valor;
+     Elimina(ultimo);
 }
 
 template<typename T, int MAX>
-int pila<T, MAX>::top()
+T pila<T, MAX>::top(int opc)
 {
     if (Vacia()) {
-        cout << "La pila está vacía. No hay elementos en la cima." << endl;
+        cout << "La pila esta vacia. No hay elementos en la cima." << endl;
         return -1; 
     }
-    cout << endl << "El tope de la pila es: " << Datos[ultimo] << endl;
-    return Datos[ultimo];
+    if(opc == 0){
+        cout << "El tope de la pila es el dato: " << endl << Datos[ultimo] << endl;
+        return 0;
+    }else{
+        return Datos[ultimo];   
+    }
+    return Datos[ultimo]; 
 }
 
 
